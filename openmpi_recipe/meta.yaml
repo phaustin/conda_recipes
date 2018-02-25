@@ -1,0 +1,73 @@
+{% set build = 1 %}
+{% set version = '1.8.7' %}
+{% set sha256 = 'da629e9bd820a379cfafe15f842ee9b628d7451856085ccc23ee75ab3e1b48c7' %}
+{% set major = version.rpartition('.')[0] %}
+
+package:
+    name: openmpi
+    version: {{ version }}
+
+source:
+    fn: openmpi-{{ version }}.tar.bz2
+    url: https://www.open-mpi.org/software/ompi/v{{ major }}/downloads/openmpi-{{ version }}.tar.bz2
+    sha256: {{ sha256 }}
+
+build:
+    number: {{ build }}
+    skip: True  # [win]
+
+requirements:
+    build:
+        - {{ compiler('c') }}
+        - {{ compiler('fortran') }}
+        - {{ compiler('cxx') }}
+        - perl
+    host:
+        - {{ compiler('c') }}
+        - {{ compiler('fortran') }}
+        - {{ compiler('cxx') }}
+        - libgcc-ng  # [linux]
+        - libgfortran-ng
+    run:
+        - {{ compiler('c') }}
+        - {{ compiler('fortran') }}
+        - {{ compiler('cxx') }}
+        - libgcc-ng  # [linux]
+        - libgfortran-ng
+
+test:
+    requires:
+        - libgcc-ng  # [linux]
+        - {{ compiler('c') }}
+        - {{ compiler('fortran') }}
+        - {{ compiler('cxx') }}
+    files:
+        - tests/helloworld.c
+        - tests/helloworld.cxx
+        - tests/helloworld.f
+        - tests/helloworld.f90
+    commands:
+        - conda inspect objects  openmpi  # [osx]
+        - conda inspect linkages openmpi  # [not win]
+
+about:
+    home: https://www.open-mpi.org/
+    license: BSD 3-Clause
+    license_family: BSD
+    license_file: LICENSE
+    summary: 'An open source Message Passing Interface implementation.'
+    description: |
+        The Open MPI Project is an open source Message Passing Interface
+        implementation that is developed and maintained by a consortium of academic,
+        research, and industry partners.
+    doc_url: https://www.open-mpi.org/doc/
+    dev_url: https://github.com/open-mpi/ompi
+
+extra:
+    recipe-maintainers:
+        - astrofrog-conda-forge
+        - bekozi
+        - dalcinl
+        - minrk
+        - msarahan
+        - ocefpaf

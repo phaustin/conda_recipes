@@ -17,19 +17,19 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('fortran') }}
-    - libnetcdf 4.5.0
+    - libnetcdf 4.4.*
     - hdf5 1.10.1
     - pkg-config  # [not win]
 
   host:
     - {{ compiler('c') }}
     - {{ compiler('fortran') }}
-    - libnetcdf 4.5.0
+    - libnetcdf 4.4.*
     - hdf5 1.10.1
     - pkg-config  # [not win]
 
   run:
-    - libnetcdf 4.5.0
+    - libnetcdf 4.4.*
     - hdf5 1.10.1
     - libgcc-ng
     - libgfortran-ng  

@@ -1,0 +1,49 @@
+{% set version = "0.0.1" %}
+
+package:
+  name: sam_cmake
+  version: {{ version }}
+source:
+  git_url: https://github.com/phaustin/sam_ubc_entrain.git
+
+build:
+  number: 1
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('fortran') }}
+    - libnetcdf 4.4.*
+    - netcdf-fortran
+    - openmpi 1.8.7
+
+  host:
+    - {{ compiler('c') }}
+    - {{ compiler('fortran') }}
+    - libnetcdf 4.4.*
+    - netcdf-fortran
+    - libgcc-ng
+    - libgfortran-ng  
+    - openmpi 1.8.7
+
+  run:
+    - libnetcdf 4.4.*
+    - netcdf-fortran
+    - libgcc-ng
+    - libgfortran-ng  
+    - openmpi 1.8.7
+
+test:
+  commands:
+    - conda inspect linkages -p $PREFIX $PKG_NAME  # [not win]
+    - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+
+about:
+  home: https://github.com/Unidata/netcdf-fortran
+  license: http://www.unidata.ucar.edu/software/netcdf/copyright.html
+  summary: 'Unidata NetCDF Fortran Library.'
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - bekozi

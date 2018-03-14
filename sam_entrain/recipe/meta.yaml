@@ -5,6 +5,7 @@ package:
   version: {{ version }}
 source:
   git_url: https://github.com/phaustin/sam_ubc_entrain.git
+  #path: ../
 
 build:
   number: 1
